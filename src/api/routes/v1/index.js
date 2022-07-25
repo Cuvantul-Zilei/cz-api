@@ -14,6 +14,9 @@ router.get('/status', (req, res) => res.send('OK'));
  */
 router.use('/docs', express.static('docs'));
 
+// test route
+router.use('/cuvant', express.static('docs'));
+
 router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 
