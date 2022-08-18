@@ -56,7 +56,7 @@ yarn docs
 
 ## Deploy
 
-Deployments are automatically synced with branch `master`
+Deployments are automatically synced with branch `prod`
 
 
 ## Inspiration
