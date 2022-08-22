@@ -1,27 +1,32 @@
 {
   "name": "cz-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "beta: RESTful API for cuvantulzilei.ro/api",
   "main": "index.js",
   "dependencies": {
     "express": "^4.16.4",
     "netlify-lambda": "^1.4.3",
+    "requestify": "^0.2.5",
     "serverless-http": "^1.9.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
   "scripts": {
+    "devl": "nodemon index.js",
+    "dev": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve src",
     "start": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve src",
     "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/owenconti/netlify-express.git"
+    "url": "git+https://github.com/Cuvantul-Zilei/cz-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/owenconti/netlify-express/issues"
+    "url": "https://github.com/Cuvantul-Zilei/cz-api/issues"
   },
-  "homepage": "https://github.com/owenconti/netlify-express#readme"
+  "homepage": "https://github.com/Cuvantul-Zilei/cz-api#readme"
 }
