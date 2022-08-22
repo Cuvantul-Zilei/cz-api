@@ -20,6 +20,7 @@ const BASE = '/.netlify/functions/api';
 router.get("/", (req, res) => {
   let docs = `<h1>GET endpoints</h1>` +
              `<ul>` +
+                `<li><a href="${BASE}/random" target="_blank" />/random</a></li>` +
                 `<li><a href="${BASE}/cuvant" target="_blank" />/cuvant</a></li>` +
                 `<li><a href="${BASE}/cuvinte" target="_blank" />/cuvinte</a></li>` +
               `</ul>`;
