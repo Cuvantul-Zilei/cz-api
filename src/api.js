@@ -30,7 +30,7 @@ router.get("/", (req, res) => {
 router.get("/cuvant", (req, res) => {
   res.json({
     cuvant: 'cuvant',
-    date: new Date()
+    date: new Date().toLocaleDateString()
   });
 });
 
