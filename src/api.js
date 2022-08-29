@@ -17,13 +17,6 @@ const BASE = '/.netlify/functions/api';
 //   });
 // });
 
-// API SPECS
-// /cuvant
-// /cuvant?json
-// /cuvant?random
-
-// /cuvinte
-// /cuvinte?json
 router.get("/", (req, res) => {
   let docs = `<h1>GET endpoints</h1>` +
              `<ul>` +
