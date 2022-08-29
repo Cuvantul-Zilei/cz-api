@@ -88,13 +88,20 @@ router.get("/cuvant", (req, res) => {
 
 
 router.get("/cuvinte", (req, res) => {
+  let json = req.query.json === '' || false;
   let cuvinte, postate = [];
+
   requestify.get('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(function(response) {
       cuvinte = response.getBody();
       postate = cuvinte.cuvintePostate;
       
       if(cuvinte && postate) {
-          res.send(cuvinte.cuvintePostate) 
+          if(json) {
+            res.json(postate) 
+          } else {
+            let cuvinteCSV = postate.map(c => c.cuvant).join(', ');
+            res.send(cuvinteCSV)
+          }
       }
   });
 });
