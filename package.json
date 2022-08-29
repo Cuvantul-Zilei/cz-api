@@ -7,10 +7,12 @@
     "express": "^4.16.4",
     "netlify-lambda": "^1.4.3",
     "requestify": "^0.2.5",
-    "serverless-http": "^1.9.1"
+    "serverless-http": "^1.9.1",
+    "glob-parent": ">=5.1.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "glob-parent": ">=5.1.2"
   },
   "scripts": {
     "devl": "nodemon index.js",
