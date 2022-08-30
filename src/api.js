@@ -5,17 +5,12 @@ const express = __non_webpack_require__('express');
 const serverless = require("serverless-http");
 // https://github.com/ranm8/requestify
 const requestify = require('requestify'); 
+// import { humanDate, generateRandom } from './helpers'
 
 const app = express();
 const router = express.Router();
 
 const BASE = '/.netlify/functions/api';
-
-// router.get("/", (req, res) => {
-//   res.json({
-//     hello: "hi!"
-//   });
-// });
 
 function humanDate(date) {
   const formattingOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -26,8 +21,6 @@ function humanDate(date) {
 
 function generateRandom(maxLimit = 100){
   let rand = Math.random() * maxLimit;
-  console.log(rand); // say 99.81321410836433
-
   rand = Math.floor(rand); // 99
 
   return rand;
@@ -36,9 +29,13 @@ function generateRandom(maxLimit = 100){
 router.get("/", (req, res) => {
   let docs = `<h1>GET endpoints</h1>` +
              `<ul>` +
-                `<li><a href="${BASE}/random" target="_blank" />/random</a></li>` +
                 `<li><a href="${BASE}/cuvant" target="_blank" />/cuvant</a></li>` +
+                `<li><a href="${BASE}/cuvant?json" target="_blank" />/cuvant?json</a></li>` +
+                `<li><a href="${BASE}/cuvant?random" target="_blank" />/cuvant?random</a></li>` +
+                `<li><a href="${BASE}/cuvant?mesaj" target="_blank" />/cuvant?mesaj</a></li>` +
+                `<li></li>`
                 `<li><a href="${BASE}/cuvinte" target="_blank" />/cuvinte</a></li>` +
+                `<li><a href="${BASE}/cuvinte?json" target="_blank" />/cuvinte?json</a></li>` +
               `</ul>`;
   res.send(docs)
 });
@@ -47,6 +44,7 @@ router.get("/cuvant", (req, res) => {
 
   let json = req.query.json === '' || false;
   let random = req.query.random === '' || false;
+  let mesaj = req.query.mesaj === '' || false;
 
   let cuvinte, postate = [];
   requestify.get('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(function(response) {
@@ -58,19 +56,24 @@ router.get("/cuvant", (req, res) => {
         if(random) {
           wordIndex = generateRandom(postate.length);
         } else {
-          wordIndex = postate.findIndex(c => humanDate(c.dateCorrect) === humanDate())
+          wordIndex = postate.findIndex(c => humanDate(c.dateIso) === humanDate())
         }
         if(wordIndex > -1) {
-          let dateFromApi = humanDate(postate[wordIndex].dateCorrect);
+          let dateFromApi = humanDate(postate[wordIndex].dateIso);
           let cuvantFromApi = postate[wordIndex].cuvant;
           let definitionFromApi = postate[wordIndex].definition;
 
             if(json) {
-              res.json({
-                cuvant: cuvantFromApi,
-                definition: definitionFromApi,
-                date: dateFromApi,
-              });
+              if(mesaj) {
+                // todo: reaseach manychat API response format
+                // res.json({
+              } else {
+                res.json({
+                  cuvant: cuvantFromApi,
+                  definition: definitionFromApi,
+                  date: dateFromApi,
+                });
+              }
             } else {
               res.send(cuvantFromApi)
             }
