@@ -121,7 +121,7 @@ router.get("/cuvinte", (req, res) => {
       
       if(cuvinte && postate) {
           if(json) {
-            res.json({postate}) 
+            res.json(postate) 
           } else {
             let cuvinteCSV = postate.map(c => c.cuvant).join(', ');
             res.send(cuvinteCSV)
