@@ -26,6 +26,23 @@ function generateRandom(maxLimit = 100){
   return rand;
 }
 
+function generateManychatResponse(message) {
+  return {
+    version: "v2",
+    content: {
+      messages: [
+        {
+          type: "text",
+          text: message,
+          buttons: []
+        }
+      ],
+      actions: [],
+      quick_replies: []
+    }
+  }
+}
+
 // cors middleware
 app.use(function (req, res, next) {
 
@@ -54,6 +71,7 @@ router.get("/", (req, res) => {
                 `<li><a href="${BASE}/cuvant?json" target="_blank" />/cuvant?json</a></li>` +
                 `<li><a href="${BASE}/cuvant?random" target="_blank" />/cuvant?random</a></li>` +
                 `<li><a href="${BASE}/cuvant?mesaj" target="_blank" />/cuvant?mesaj</a></li>` +
+                `<li><a href="${BASE}/cuvant?definitie" target="_blank" />/cuvant?definitie</a></li>` +
                 `<li></li>`
                 `<li><a href="${BASE}/cuvinte" target="_blank" />/cuvinte</a></li>` +
                 `<li><a href="${BASE}/cuvinte?json" target="_blank" />/cuvinte?json</a></li>` +
@@ -66,6 +84,7 @@ router.get("/cuvant", (req, res) => {
   let json = req.query.json === '' || false;
   let random = req.query.random === '' || false;
   let mesaj = req.query.mesaj === '' || false;
+  let definitie = req.query.definitie === '' || false;
 
   let cuvinte, postate = [];
   requestify.get('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(function(response) {
@@ -87,20 +106,11 @@ router.get("/cuvant", (req, res) => {
             if(json) {
               if(mesaj) {
                 // todo: add more flowers to v1
-                res.json({
-                  version: "v2",
-                  content: {
-                    messages: [
-                      {
-                        type: "text",
-                        text: cuvantFromApi,
-                        buttons: []
-                      }
-                    ],
-                    actions: [],
-                    quick_replies: []
-                  }
-                })
+                if(definitie) {
+                  res.json(generateManychatResponse(definitionFromApi));
+                } else {
+                  res.json(generateManychatResponse(cuvantFromApi));
+                }
               } else {
                 res.json({
                   cuvant: cuvantFromApi,
