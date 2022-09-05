@@ -13,3 +13,22 @@ let generateRandom = function(maxLimit = 100){
 } 
 
 export { humanDate, generateRandom } 
+
+function calculateDaysBetweenDates(begin, end) {
+    let oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    let firstDate = new Date(begin);
+    let secondDate = new Date(end);
+    
+    return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+}
+
+function fizzbuzz(number) {
+    let result = '';
+    if (number % 3 === 0) {
+        result += 'Fizz';
+    }
+    if (number % 5 === 0) {
+        result += 'Buzz';
+    }
+    return result;
+}

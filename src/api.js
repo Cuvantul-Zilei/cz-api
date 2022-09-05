@@ -86,8 +86,21 @@ router.get("/cuvant", (req, res) => {
 
             if(json) {
               if(mesaj) {
-                // todo: reaseach manychat API response format
-                // res.json({
+                // todo: add more flowers to v1
+                res.json({
+                  version: "v2",
+                  content: {
+                    messages: [
+                      {
+                        type: "text",
+                        text: cuvantFromApi,
+                        buttons: []
+                      }
+                    ],
+                    actions: [],
+                    quick_replies: []
+                  }
+                })
               } else {
                 res.json({
                   cuvant: cuvantFromApi,
