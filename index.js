@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import requestify from 'requestify'; 
 
-
+const INTERNAL_API_URL = "https://script.google.com/macros/s/AKfycbyk69E5TaJRlam2OD4VBF5WBNc6oP8GSdbzTr_42KUdruPpmx_1e5XvsE1cnxEEnPsR/exec?path=cuvinte"
 const app = express();
 const PORT = 5000;
 
@@ -10,14 +10,12 @@ app.use(bodyParser.json());
 
 app.get('/cuvant', (req, res) => { res.send('Cuvantul zilei') });
 app.get('/cuvinte', (req, res) => { 
-    // let cuvinte = fetch('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(res => res.json());
     let cuvinte, postate = [];
-    requestify.get('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(function(response) {
+    requestify.get(INTERNAL_API_URL).then(function(response) {
         cuvinte = response.getBody();
-        postate = cuvinte.cuvintePostate;
         
         if(cuvinte && postate) {
-            res.send(cuvinte.cuvintePostate) 
+            res.send(cuvinte) 
         }
     });
 });

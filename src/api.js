@@ -5,6 +5,8 @@ const express = __non_webpack_require__('express');
 const serverless = require("serverless-http");
 // https://github.com/ranm8/requestify
 const requestify = require('requestify'); 
+const INTERNAL_API_URL = "https://script.google.com/macros/s/AKfycbyk69E5TaJRlam2OD4VBF5WBNc6oP8GSdbzTr_42KUdruPpmx_1e5XvsE1cnxEEnPsR/exec?path=cuvinte"
+
 // import { humanDate, generateRandom } from './helpers'
 
 const app = express();
@@ -68,9 +70,8 @@ router.get("/cuvant", (req, res) => {
   let mesaj = req.query.mesaj === '' || false;
 
   let cuvinte, postate = [];
-  requestify.get('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(function(response) {
-      cuvinte = response.getBody();
-      postate = cuvinte.cuvintePostate;
+  requestify.get(INTERNAL_API_URL).then(function(response) {
+      postate = response.getBody();
       
       if(cuvinte && postate) {
         let wordIndex;
@@ -115,9 +116,9 @@ router.get("/cuvinte", (req, res) => {
   let json = req.query.json === '' || false;
   let cuvinte, postate = [];
 
-  requestify.get('https://api.sheety.co/06def408e74850aef0fbd22a79539f9f/cuvantulzilei/cuvintePostate').then(function(response) {
-      cuvinte = response.getBody();
-      postate = cuvinte.cuvintePostate;
+  requestify.get(INTERNAL_API_URL).then(function(response) {
+      postate = response.getBody();
+
       
       if(cuvinte && postate) {
           if(json) {
